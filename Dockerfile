@@ -28,7 +28,10 @@ RUN apt-get update \
     tzdata \
     vim \
     wget \
+    unzip \
   && apt-get purge --auto-remove \
+  && wget https://registry.npmmirror.com/-/binary/chromium-browser-snapshots/Linux_x64/970486/chrome-linux.zip -O /tmp/chrome.zip \
+  && unzip /tmp/chrome.zip -d /opt/ \
   && rm -rf /tmp/* /var/lib/apt/lists/*
 
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
@@ -36,10 +39,12 @@ RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get purge --auto-remove \
     && rm -rf /tmp/* /var/lib/apt/lists/*
 
+
 RUN mkdir -p /app
 WORKDIR /app
 
 COPY package.json ./
+COPY .env ./
 RUN npm i
 
 COPY *.js ./
