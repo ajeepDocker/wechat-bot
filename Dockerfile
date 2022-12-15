@@ -30,7 +30,7 @@ RUN apt-get update \
     wget \
     unzip \
   && apt-get purge --auto-remove \
-  && wget https://registry.npmmirror.com/-/binary/chromium-browser-snapshots/Linux_x64/970486/chrome-linux.zip -O /tmp/chrome.zip \
+  && wget -q https://registry.npmmirror.com/-/binary/chromium-browser-snapshots/Linux_x64/970486/chrome-linux.zip -O /tmp/chrome.zip \
   && unzip /tmp/chrome.zip -d /opt/ \
   && rm -rf /tmp/* /var/lib/apt/lists/*
 
@@ -49,5 +49,5 @@ RUN npm i
 
 COPY *.js ./
 COPY src/ ./src/
-
+COPY ChromeLauncher.js ./node_modules/puppeteer-core/lib/cjs/puppeteer/node/
 CMD ["npm", "run", "dev"]
